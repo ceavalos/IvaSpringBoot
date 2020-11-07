@@ -2,6 +2,7 @@ package innotech.com.Controladores;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -23,17 +24,27 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import innotech.com.entididades.Declaracion;
+import innotech.com.entididades.Empresa;
 import innotech.com.entididades.Periodo;
 import innotech.com.paginator.PageRender;
+import innotech.com.services.DeclaracionServiceImp;
+import innotech.com.services.EmpresaServiceImp;
 import innotech.com.services.PeriodoServiceImpl;
 
 @Controller
 @SessionAttributes("declaracion")
 @RequestMapping("/declaracion")
 public class DeclaracionController {
-	@Autowired
-	PeriodoServiceImpl periodoServiceimp;
 	
+	@Autowired
+	DeclaracionServiceImp declaracionServiceImp;
+	
+	@Autowired
+	EmpresaServiceImp empresaServiceImp;	
+
+	@Autowired
+	PeriodoServiceImpl periodoServiceImp;
 	
 	@Value("${innotec.com.elementosPorPagina}")
 	String elementos ;
@@ -41,86 +52,98 @@ public class DeclaracionController {
 	@RequestMapping(value="/listar", method = RequestMethod.GET)
 	public String inicial (@RequestParam(name="page", defaultValue="0") int page,   Model modelo) {
 		
-		
+	   
 		
 		int elemento = Integer.parseInt(this.elementos);  
 		
 		Pageable  pageRequest =  PageRequest.of(page, elemento);
-		Page<Periodo> periodo = periodoServiceimp.findAll(pageRequest);
+		Page<Declaracion> declaracion = declaracionServiceImp.findAll(pageRequest);
 		
-		PageRender<Periodo> pageRender = new PageRender<>("/declaracion/listar", periodo, elemento) ;
+		PageRender<Declaracion> pageRender = new PageRender<>("/declaracion/listar", declaracion, elemento) ;
 				
 		modelo.addAttribute("mensaje","hola desde thymeleaf");		
 		modelo.addAttribute("titulo","Mantenimiento de Declaraciones");
 		//modelo.addAttribute("datos",periodoServiceimp.findAll());		
-		modelo.addAttribute("datos",periodo);
+		modelo.addAttribute("datos",declaracion);
 		modelo.addAttribute("page",pageRender);
-		return "/declaracion/listar";
-		
+		return "/declaracion/listar";		
 		
 	};
 	
 	@RequestMapping(value="/ver/{id}")
 	public String ver(@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash) {
-		Periodo periodo = periodoServiceimp.findById(id);
-		if (periodo==null) {
-			flash.addAttribute("error", "El periodo no existe en la Base de datos");
-			return "redirect:/empresa/listar";
+		Declaracion declaracion = declaracionServiceImp.findOne(id);
+		if (declaracion==null) {
+			flash.addAttribute("error", "La Declaracion no existe en la Base de datos");
+			return "redirect:/declaracion/listar";
 		}
 		//
-		model.put("datos", periodo);
-		model.put("titulo", "Detalle Periodos Configurados " );
-		//model.put("datos",periodo);
+		model.put("datos", declaracion);
+		model.put("titulo", "Detalle Declaraciones Configuradas " );
 		//
-		return "/periodo/ver";
+		return "/declaracion/ver";
 	}
 	
 	@RequestMapping(value="/form") 
 	public String form (Model modelo) throws ParseException {	
-		Periodo periodo = new Periodo();
+		Declaracion declaracion  = new Declaracion();
+		
+		List<Empresa> empresa =  empresaServiceImp.findAll();
+		
+		List<Periodo> periodo = periodoServiceImp.findAll();
+		
 		//empresa.setNombre("Carlitos Avalos");
-		SimpleDateFormat objSDF = new SimpleDateFormat("yyyy-mm-dd"); 
+		//SimpleDateFormat objSDF = new SimpleDateFormat("yyyy-mm-dd"); 
 		//periodo.setDescripcion("descripcion");
 		//periodo.setFechaInicio( objSDF.parse("2020-01-01"));
 		//periodo.setFechaFinal(objSDF.parse("2020-01-01"));
 		//---
-		modelo.addAttribute("titulo","Creación de Periodo");	
-		modelo.addAttribute("periodo",periodo);
+		modelo.addAttribute("titulo","Creación de Declaraciones");	
+		modelo.addAttribute("datos",declaracion);
+		modelo.addAttribute("empresa",empresa);
+		modelo.addAttribute("periodo", periodo);
 		
-		return "/periodo/form";
+		return "/declaracion/form";
 	};
 	
 	
 	@RequestMapping(value="/form", method=RequestMethod.POST)
-	public String salvar (@Valid @ModelAttribute(value="periodo") Periodo periodo, BindingResult result, Model model, 
+	public String salvar (@Valid @ModelAttribute(value="datos") Declaracion declaracion, BindingResult result, Model model, 
 			RedirectAttributes flash, SessionStatus status) {	
 		
 		if (result.hasErrors()) {
-			model.addAttribute("titulo","Creación de Periodo");		
-			System.out.println("Estamos en error periodo " + result.getFieldError(null)+" "+  periodo.getDescripcion()+" " + periodo.getFechaFinal()+" "+periodo.getFechaInicio());			
-			return "/periodo/form";
+			model.addAttribute("titulo","Creación de Declaraciones");	
+			List<Empresa> empresa =  empresaServiceImp.findAll();			
+			List<Periodo> periodo = periodoServiceImp.findAll();
+			model.addAttribute("empresa",empresa);
+			model.addAttribute("periodo", periodo);
+			
+			System.out.println("Cantidad de Errores --> " + result.getFieldError());			
+			return "/declaracion/form";
+			//return "/declaracion/listar";
 		} else {
 		
-			String mensajeFlash = (periodo.getId() != null)? "Periodo Editado con éxito" : " Periodo guardado con éxito "  ;
-			periodoServiceimp.save(periodo);
-			//System.out.println(periodo.getDescripcion() + " ----");			
-			model.addAttribute("titulo","Creación de Periodos");
+			String mensajeFlash = (declaracion.getId() != null)? "Declaración Editada con éxito" : " Declaración guardada con éxito "  ;
+			declaracionServiceImp.save(declaracion);
+			System.out.println(declaracion.getDescripcion()+ " ----");			
+			model.addAttribute("titulo","Creación de Declaraciones");
 		    status.setComplete();
 		    flash.addFlashAttribute("success", mensajeFlash );
 		
-		return "redirect:/periodo/listar";
+		return "redirect:/declaracion/listar";
 		}
 
+		
 	};
 	
 	@RequestMapping(value="/form/{id}")
 	public String editar(@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 		
-		Periodo periodo = null;
+		Declaracion declaracion = null;
 		
 		if(id > 0) {
-			periodo = periodoServiceimp.findById(id);
-			if (periodo == null) {
+			declaracion = declaracionServiceImp.findOne(id);
+			if (declaracion == null) {
 				flash.addFlashAttribute("error", " El periodo no existe en la Base de datos");
 				return "redirect:/listar";
 			}
@@ -128,10 +151,17 @@ public class DeclaracionController {
 			flash.addFlashAttribute("error", " Periodo no existe");
 			return "redirect:/listar";
 		}
+		
+		 Empresa empresa =  empresaServiceImp.findById(declaracion.getEmpresa().getId());		
+		 Periodo periodo =  periodoServiceImp.findById(declaracion.getPeriodo().getId());
+		//
+		model.put("titulo","Edición de Declaraciones");
+		model.put("datos", declaracion);
+		model.put("empresa", empresa);
 		model.put("periodo", periodo);
-		model.put("titulo", "Editar Periodo");
+		//
 		flash.addFlashAttribute("success", " Periodo guardado con éxito");
-		return "/periodo/form";
+		return "/declaracion/form";
 	}
 	
 	
@@ -139,11 +169,11 @@ public class DeclaracionController {
 	public String eliminar(@PathVariable(value="id") Long id, RedirectAttributes flash) {
 		
 		if(id > 0) {
-			periodoServiceimp.delete(id);
+			declaracionServiceImp.delete(id);
 		}
-		flash.addFlashAttribute("success", " Periodo eliminado con éxito");
-		return "redirect:/periodo/listar";
+		flash.addFlashAttribute("success", " Declaracion eliminada con éxito");
+		return "redirect:/declaracion/listar";
 	}
 	
-	
+
 }

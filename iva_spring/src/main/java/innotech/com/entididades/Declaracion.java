@@ -14,9 +14,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
+
+
 
 @Entity
 @Table(name="declaraciones")
@@ -32,15 +35,14 @@ public class Declaracion implements Serializable {
 	private Long id;
 	
 	@NotBlank
-	@Size(min = 6, max = 20, message = "el tamaño tiene que estar entre 6 y 20")
+	@Size( max = 60, message = "el tamaño tiene que ser menor a 60 caracteres")
 	private String descripcion;
 	
 	@Temporal(TemporalType.DATE)
-	@NotBlank
+	//@NotBlank
 	@Column(name = "create_at")
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date createAt;
-	
+	private Date createAt;	
 	
 	@PrePersist
 	public void prePersis() {
@@ -48,9 +50,11 @@ public class Declaracion implements Serializable {
 	}
 	
     @ManyToOne
+    @NotNull
 	private Empresa empresa;
 
     @ManyToOne
+    @NotNull
     private Periodo periodo;
     
     
@@ -60,7 +64,7 @@ public class Declaracion implements Serializable {
 
 	public void setPeriodo(Periodo periodo) {
 		this.periodo = periodo;
-	}
+	} 
 
 	public Long getId() {
 		return id;

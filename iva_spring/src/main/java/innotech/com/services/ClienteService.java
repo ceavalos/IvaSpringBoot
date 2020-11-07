@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import innotech.com.entididades.Cliente;
 
 
-public interface IClienteService {
+public interface ClienteService {
 	
 	public List<Cliente> findAll();
 	

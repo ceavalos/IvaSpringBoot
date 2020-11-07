@@ -11,8 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -32,46 +34,24 @@ public class Periodo implements Serializable {
 	@Size(min = 5, max = 20, message = "el tamaño tiene que estar entre 6 y 20")
 	private String descripcion;
 	
-	//@NotBlank(message = "Fecha inicio no puede estara vacia")
+	@NotNull
 	@Column(name = "fechainicio")
-	//@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date fechaInicio;
 	
-	//@NotBlank(message = "Fecha final no puede estara vacia")
+	@NotNull
+	@Temporal(TemporalType.DATE)
 	@Column(name = "fechafinal")
-	//@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date fechaFinal;
 	
-	@PrePersist
+/*	@PrePersist
 	public void prePersis() {
 		this.fechaFinal = new Date();
 		this.fechaInicio = new Date();
-	}
-	
-
-	public Date getFechaInicio() {
-		return fechaInicio;
-	}
-
-	public void setFechaInicio(Date fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
-
-	public Date getFechaFinal() {
-		return fechaFinal;
-	}
-
-	public void setFechaFinal(Date fechaFinal) {
-		this.fechaFinal = fechaFinal;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-
+	}	*/
+		
 	@OneToMany( mappedBy = "periodo", cascade = CascadeType.ALL)
 	private List<Declaracion> declaracion;
 		
@@ -97,7 +77,26 @@ public class Periodo implements Serializable {
 		this.descripcion = descripcion;
 	}
 	
-	
+
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public Date getFechaFinal() {
+		return fechaFinal;
+	}
+
+	public void setFechaFinal(Date fechaFinal) {
+		this.fechaFinal = fechaFinal;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
 
 	/**
 	 * 

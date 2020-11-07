@@ -13,7 +13,7 @@ import innotech.com.entididades.Cliente;
 
 
 @Service
-public class ClienteServiceImpl implements IClienteService {
+public class ClienteServiceImpl implements ClienteService {
 
 	@Autowired
 	private IClienteDao clienteDao;

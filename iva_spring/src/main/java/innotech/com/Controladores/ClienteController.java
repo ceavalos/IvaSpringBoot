@@ -41,7 +41,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import innotech.com.entididades.Cliente;
 import innotech.com.entididades.Empresa;
 import innotech.com.paginator.PageRender;
-import innotech.com.services.IClienteService;
+import innotech.com.services.ClienteService;
 import innotech.com.services.IUploadFileService;
 
 @Controller
@@ -50,7 +50,7 @@ import innotech.com.services.IUploadFileService;
 public class ClienteController {
 
 	@Autowired
-	private IClienteService clienteService;
+	private ClienteService clienteService;
 
 	@Autowired
 	private IUploadFileService uploadFileService;
