@@ -1,3 +1,0 @@
-INSERT INTO empresas (id, nombre, nit, nrc, representante, direccion, telefono, correo, usuario)  VALUES (1, 'FUDEM',      '0715-12141975-101', '123-56', 'PEPE TORO',           'SAN SALVADOR', '22708201', 'eltoro@gmail.com',  'CAVALOS');
-INSERT INTO empresas (id, nombre, nit, nrc, representante, direccion, telefono, correo, usuario)  VALUES (2, 'GALAXIA',    '0715-12141975',     '123-56', 'LA MUJER MARAVILLA', 'SAN SALVADOR', '22708201', 'galxia@gmail.com',   'CAVALOS');
-INSERT INTO empresas (id, nombre, nit, nrc, representante, direccion, telefono, correo, usuario)  VALUES (3, 'INNOVACION', '0715-12141975',     '123-56', 'EL GIGANTE',         'SAN SALVADOR', '22708201', 'cipotex<@gmail.com', 'CAVALOS');

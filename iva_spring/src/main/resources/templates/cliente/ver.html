@@ -10,12 +10,16 @@
 			<div class="card-body">
 
 				<img 
-					th:if="${cliente.foto} != null" class= "img-thumbnail rounded float-left" style="max-width: 20%;"
+					th:if="${cliente.foto} != null" class= "img-thumbnail rounded float-left" style="max-width: 27%;"
 					th:src="@{'/cliente/uploads/'}+${cliente.foto}" th:alt="${cliente.foto}" />
+				<img 
+					th:unless="${cliente.foto} != null" class= "img-thumbnail rounded float-left" style="max-width: 27%;"
+					th:src="@{'/image/noimage.png'}" th:alt="noimage.png" />
 
 				<ul class="list-group">
 					<li class="list-group-item" th:text="${cliente.nombre}"></li>
 					<li class="list-group-item" th:text="${cliente.apellido}"></li>
+					<li class="list-group-item" th:text="${cliente.nrc}"></li>
 					<li class="list-group-item" th:text="${cliente.dui}"></li>
 					<li class="list-group-item" th:text="${cliente.nit}"></li>
 					<li class="list-group-item" th:text="${cliente.email}"></li>

@@ -24,10 +24,11 @@
 							<th>id</th>
 							<th>nombre</th>
 							<th>apellido</th>
+							<th>nrc</th>
 							<th>dui</th>
 							<th>nit</th>
 							<th>email</th>
-							<th>fecha</th>
+							<th>creado</th>
 							<th>editar</th>
 							<th>eliminar</th>
 						</tr>
@@ -39,6 +40,7 @@
 							
 							<td th:text="${cliente.nombre}"></td>
 							<td th:text="${cliente.apellido}"></td>
+							<td th:text="${cliente.nrc}"></td>
 							<td th:text="${cliente.dui}"></td>
 							<td th:text="${cliente.nit}"></td>
 							<td th:text="${cliente.email}"></td>
@@ -54,6 +56,7 @@
 
 				</table>
 				<nav th:replace="layout/paginator-nav :: paginator"></nav>
+				
 			</div>
 		</div>
 	</div>

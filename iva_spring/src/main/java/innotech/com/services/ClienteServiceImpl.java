@@ -52,5 +52,11 @@ public class ClienteServiceImpl implements ClienteService {
 		
 	}
 
+	@Override
+	public List<Cliente> findByNrc(String nrc) {
+		
+		return clienteDao.findByNrc(nrc);
+	}
+	
 	
 }

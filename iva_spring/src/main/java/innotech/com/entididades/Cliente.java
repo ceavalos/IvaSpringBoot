@@ -36,7 +36,9 @@ public class Cliente implements Serializable {
 	 @NotBlank
 	private String email;
 	 
-
+	 @Column(unique = true)
+	 private String nrc;
+	 
 	 @Column(unique = true)
 	 private String dui;
 	 
@@ -116,6 +118,16 @@ public class Cliente implements Serializable {
 
 	public void setNit(String nit) {
 		this.nit = nit;
+	}
+
+	
+	
+	public String getNrc() {
+		return nrc;
+	}
+
+	public void setNrc(String nrc) {
+		this.nrc = nrc;
 	}
 
 	public static long getSerialversionuid() {

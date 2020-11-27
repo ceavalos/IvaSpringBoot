@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 import innotech.com.entididades.Cliente;
 
-
 public interface ClienteService {
 	
 	public List<Cliente> findAll();
@@ -19,5 +18,7 @@ public interface ClienteService {
 	public Cliente findOne(Long id);
 	
 	public void delete(Long id);
+	
+	public List<Cliente> findByNrc(String nrc);
 	
 }

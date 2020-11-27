@@ -23,8 +23,10 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">PERIODO</label> <label
 							class="col-sm-6 col-form-label "
-							th:text="${datos.periodo.descripcion}"></label>
+							th:text="${datos.periodo.descripcion} + ' Del:' +${datos.periodo.fechaInicio}   + ' Al: ' +${datos.periodo.fechaFinal} "></label>
 					</div>
+
+
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">EMPRESA</label> <label
 							class="col-sm-6 col-form-label "
@@ -34,33 +36,34 @@
 				</ul>
 			</div>
 		</div>
-<!-- 
-		<h4 class="card-title py-2">
-			<a th:href="@{#}" class="btn btn-primary btn-xs">Crear
-				Declaracion</a>
-		</h4>
-		 -->
-		 
-		<div class="card-columns py-3" >
+
+
+		<div class="card-columns py-3">
 			<div class="card" style="max-width: 18rem;">
-				
+
 				<div class="card-body">
-				<img src="/image/comprasiva.jpg" class="card-img-top" alt="librocompras"  width="260" height="280" >
-					<h5 class="card-title">LIBRO DE COMPRAS</h5>
+					<a th:href="@{/compra/listar/} + ${datos.id}"> <img
+						src="/image/comprasiva.jpg" class="card-img-top"
+						alt="librocompras" width="260" height="280">
+						<h5 class="card-title">LIBRO DE COMPRAS</h5>
+					</a>
 					<p class="card-text">Mantenimiento de libro de Compras</p>
 				</div>
 			</div>
 
 			<div class="card" style="max-width: 18rem;">
-				
-				<div class="card-body">
-				<img src="/image/libroventas.jpg" class="card-img-top" alt="libroventas"  width="260" height="280" >
-					<h5 class="card-title">LIBRO DE VENTAS</h5>
-					<p class="card-text">Mantenimiento de libro de Ventas</p>
-				</div>
+				<a href="/cliente/listar">
+					<div class="card-body">
+						<img src="/image/libroventas.jpg" class="card-img-top"
+							alt="libroventas" width="260" height="280">
+						<h5 class="card-title">LIBRO DE VENTAS</h5>
+				</a>
+				<p class="card-text">Mantenimiento de libro de Ventas</p>
 			</div>
+
 		</div>
-		
+	</div>
+
 	</div>
 </body>
 
