@@ -52,7 +52,7 @@
 			</div>
 
 			<div class="card" style="max-width: 18rem;">
-				<a href="/cliente/listar">
+				<a th:href="@{/ventas/listar/} + ${datos.id}"> 
 					<div class="card-body">
 						<img src="/image/libroventas.jpg" class="card-img-top"
 							alt="libroventas" width="260" height="280">
