@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
 <head th:replace="layout/layout :: head">
 <body>
 
@@ -14,7 +15,7 @@
 
 			<div class="card-body">
 				<h4 class="card-title">
-					<a th:href="@{/cliente/form}" class="btn btn-primary btn-xs">Crear Terceros</a>
+					<a  sec:authorize="hasRole('ROLE_ADMIN')"  th:href="@{/cliente/form}" class="btn btn-primary btn-xs">Crear Terceros</a>
 				</h4>
 
 
@@ -45,9 +46,9 @@
 							<td th:text="${cliente.nit}"></td>
 							<td th:text="${cliente.email}"></td>
 							<td th:text="${cliente.createAt}"></td>
-							<td><a class="btn btn-primary btn-xs"
+							<td><a class="btn btn-primary btn-xs" sec:authorize="hasRole('ROLE_ADMIN')" 
 								th:href="@{/cliente/form/} + ${cliente.id}" th:text="'editar'"></a></td>
-							<td><a class="btn btn-danger btn-xs"
+							<td><a class="btn btn-danger btn-xs" sec:authorize="hasRole('ROLE_ADMIN')" 
 								th:href="@{/cliente/eliminar/} + ${cliente.id}"
 								th:text="'eliminar'"
 								onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
