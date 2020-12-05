@@ -72,9 +72,7 @@ public class ClienteController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
-		
+				
 		return ResponseEntity.ok().header(HttpHeaders.
 				CONTENT_DISPOSITION, "attachment; filename= \""+ recurso.getFilename() + "\"").body(recurso);
 	}

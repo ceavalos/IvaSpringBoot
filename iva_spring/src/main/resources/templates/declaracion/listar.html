@@ -1,4 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head">
 
 
@@ -17,7 +18,7 @@
 			<div class="card-body" >
 
 				<h4 class= "card-title">
-				 <a th:href="@{/declaracion/form}" class= "btn btn-primary btn-xs">Crear Declaracion</a>
+				 <a th:href="@{/declaracion/form}" class= "btn btn-primary btn-xs" sec:authorize="hasRole('ROLE_ADMIN')" >Crear Declaracion</a>
 				</h4>
 				
  		<table class="table table-striped ">
@@ -37,9 +38,9 @@
 							<td th:text="${data.descripcion}"></td>
 					 		<td th:text="${data.periodo.descripcion} + ' Del: ' +${data.periodo.fechaInicio} + ' Al:' + ${data.periodo.fechaFinal} "></td>
 						  	<td th:text="${data.empresa.nombre}"></td>							
-					        <td><a class="btn btn-primary btn-xs" th:href="@{/declaracion/form/} + ${data.id}" th:text="'editar'"></a></td>
+					        <td><a class="btn btn-primary btn-xs" th:href="@{/declaracion/form/} + ${data.id}" th:text="'editar'" sec:authorize="hasRole('ROLE_ADMIN')" ></a></td>
 					        <td><a class="btn btn-danger btn-xs" th:href="@{/declaracion/eliminar/} + ${data.id}" th:text="'eliminar'"
-					         onclick="return confirm('Esta seguro que quieres eliminar?');"></a></td>
+					         onclick="return confirm('Esta seguro que quieres eliminar?');" sec:authorize="hasRole('ROLE_ADMIN')" ></a></td>
 					          
 						</tr>
 						
