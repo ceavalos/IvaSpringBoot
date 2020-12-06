@@ -25,3 +25,6 @@ INSERT INTO compras (declaracion_id, fecha_Emision, numero_documento,  nrc, nit_
 INSERT INTO compras (declaracion_id, fecha_Emision, numero_documento,  nrc, nit_dui, nombre_proveedor, comp_exc_interna, comp_exc_importa, comp_grv_interna, comp_grv_importa, fovial, iva_crefiscal, total_compras, compras_excluidas, percepcion) values (1,'2020-01-01' ,'73644', '12345-96','0654-123435-101-4','Inversiones Lemus S.A de C.V', 0 , 0, 10 ,0 ,0 ,0.13 ,10.13,0,0);
 INSERT INTO compras (declaracion_id, fecha_Emision, numero_documento,  nrc, nit_dui, nombre_proveedor, comp_exc_interna, comp_exc_importa, comp_grv_interna, comp_grv_importa, fovial, iva_crefiscal, total_compras, compras_excluidas, percepcion) values (1,'2020-01-01' ,'73645', '12345-96','0654-123435-101-4','Inversiones Lemus S.A de C.V', 0 , 0, 10 ,0 ,0 ,0.13 ,10.13,0,0);
  
+INSERT INTO users(id, username  password, enabled)  VALUES (1, 'admin', '$2a$10$s8wmTOcaMR.oBbBHdaLO4Ot8gbfaxobqVEwB8yzfkeTel5FNuj21C',    '1');
+INSERT INTO users(id, username, password, enabled)  VALUES (2, 'cavalos', '$2a$10$SNTkRWGE/WNsk7OkIU/tv.6WcqKOYEft9zeiqA.ubwm/33EvniHiO',    '1');
+
