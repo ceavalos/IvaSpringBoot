@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,6 +53,7 @@ public class ComprasController {
 	@Value("${innotec.com.elementosPorPagina}")
 	String elementos ;
 	
+	@Secured("ROLE_USER")
 	@RequestMapping(value="/listar/{id}", method = RequestMethod.GET)
 	public String inicial (@PathVariable(value="id") Long id, @RequestParam(name="page", defaultValue="0") int page,   Model modelo) {
 		
@@ -92,6 +94,7 @@ public class ComprasController {
 		
 	};
 	
+	@Secured("ROLE_USER")
 	@RequestMapping(value="/ver/{id}")
 	public String ver(@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 		Compra compra = compraServiceImp.findOne(id);
@@ -115,6 +118,7 @@ public class ComprasController {
 		return newcompra;
 	}
 	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/forms/{id}") 
 	public String forms (@PathVariable(value="id") Long id, Model modelo, RedirectAttributes flash) throws ParseException {	
 		
@@ -187,6 +191,7 @@ public class ComprasController {
 	}
 	*/
 	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/eliminar/{id}")
 	public String eliminar(@PathVariable(value="id") Long id, RedirectAttributes flash) {
 		Compra compra = compraServiceImp.findOne(id);

@@ -74,7 +74,7 @@
 					<th>Sujetos Excluidos</th>
 					<th>Percepcion</th>
 					<th>Total Compras</th>
-					<th>Eliminar</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')">Eliminar</th>
 				</tr>
 			</thead>
 			<tbody>

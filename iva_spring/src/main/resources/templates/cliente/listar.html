@@ -30,8 +30,8 @@
 							<th>nit</th>
 							<th>email</th>
 							<th>creado</th>
-							<th>editar</th>
-							<th>eliminar</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">editar</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">eliminar</th>
 						</tr>
 					</thead>
 					<tbody>

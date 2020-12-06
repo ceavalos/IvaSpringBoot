@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,7 +48,7 @@ public class VentasController {
 	@Value("${innotec.com.elementosPorPagina}")
 	String elementos ;
 	
-	
+	@Secured("ROLE_USER")
 	@RequestMapping(value="/listar/{id}", method = RequestMethod.GET)
 	public String inicial (@PathVariable(value="id") Long id, @RequestParam(name="page", defaultValue="0") int page,   Model modelo) {
 		
@@ -94,6 +95,7 @@ public class VentasController {
 		return "/ventas/ver";
 	}
 	
+	
 	@RequestMapping(value="/nuevo") 
 	public Venta nuevo(Map<String, Object> model, RedirectAttributes flash) {
 		Venta newventa  = new Venta();
@@ -103,7 +105,7 @@ public class VentasController {
 		return newventa;
 	}
 	
-	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/forms/{id}") 
 	public String forms (@PathVariable(value="id") Long id, Model modelo, RedirectAttributes flash) throws ParseException {	
 		
@@ -117,6 +119,7 @@ public class VentasController {
 		System.out.println("Salida desde el forms de compras");		
 		return "/ventas/form";
 	};
+	
 	
 	@RequestMapping(value="/form", method=RequestMethod.POST)
 	public String salvar (@Valid @ModelAttribute(value="datosNew") Venta venta, BindingResult result, Model model, 
@@ -140,7 +143,7 @@ public class VentasController {
 		}
 	};
 	
-	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/eliminar/{id}")
 	public String eliminar(@PathVariable(value="id") Long id, RedirectAttributes flash) {
 		Venta venta = ventaServiceImp.findOne(id);

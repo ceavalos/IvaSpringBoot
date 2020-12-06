@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,6 +50,7 @@ public class DeclaracionController {
 	@Value("${innotec.com.elementosPorPagina}")
 	String elementos ;
 	
+	@Secured("ROLE_USER")
 	@RequestMapping(value="/listar", method = RequestMethod.GET)
 	public String inicial (@RequestParam(name="page", defaultValue="0") int page,   Model modelo) {
 		
@@ -84,6 +86,7 @@ public class DeclaracionController {
 		return "/declaracion/ver";
 	}
 	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/form") 
 	public String form (Model modelo) throws ParseException {	
 		Declaracion declaracion  = new Declaracion();
@@ -136,6 +139,7 @@ public class DeclaracionController {
 		
 	};
 	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/form/{id}")
 	public String editar(@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 		
@@ -164,7 +168,7 @@ public class DeclaracionController {
 		return "/declaracion/form";
 	}
 	
-	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/eliminar/{id}")
 	public String eliminar(@PathVariable(value="id") Long id, RedirectAttributes flash) {
 		

@@ -25,6 +25,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,6 +61,7 @@ public class ClienteController {
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
+	@Secured("ROLE_USER")
 	@RequestMapping(value="/uploads/{filename:.+}")
 	public ResponseEntity<Resource> verfoto( @PathVariable String filename  ){
 		Path pathfoto = Paths.get("uploads").resolve(filename).toAbsolutePath();
@@ -110,6 +112,7 @@ public class ClienteController {
 		return "/cliente/listar";
 	}
 	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/form")
 	public String crear(Map<String, Object> model) {
 
@@ -120,6 +123,7 @@ public class ClienteController {
 		return "/cliente/form";
 	}
 	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/form/{id}")
 	public String editar(@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 		
@@ -143,6 +147,7 @@ public class ClienteController {
 		return "/cliente/form";
 	}
 	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
 	public String guardar(@Valid Cliente cliente, BindingResult result, Model model, 
 			@RequestParam("file") MultipartFile foto, 
@@ -210,6 +215,7 @@ public class ClienteController {
 			return "redirect:/cliente/listar";
 	}
 	
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value="/eliminar/{id}")
 	public String eliminar(@PathVariable(value="id") Long id, RedirectAttributes flash) {
 		

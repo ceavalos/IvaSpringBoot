@@ -28,8 +28,8 @@
 							<th>Descripcion</th>
 							<th>Periodo</th>
 							<th>Empresa</th>
-							<th>editar</th>
-					        <th>eliminar</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">editar</th>
+					        <th sec:authorize="hasRole('ROLE_ADMIN')">eliminar</th>
 						</tr>
 					</thead>
 					<tbody>

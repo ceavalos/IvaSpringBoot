@@ -33,8 +33,8 @@
 							<th>Telefono</th>
 							<th>Correo</th>
 							<th>Fecha</th>
-							<th>editar</th>
-					        <th>eliminar</th>
+							<th sec:authorize="hasRole('ROLE_ADMIN')">editar</th>
+					        <th sec:authorize="hasRole('ROLE_ADMIN')">eliminar</th>
 						</tr>
 					</thead>
 					<tbody>
