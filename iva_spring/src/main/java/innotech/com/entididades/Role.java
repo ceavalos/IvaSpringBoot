@@ -10,18 +10,13 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="roles", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "authority"} )} )
-public class Role implements Serializable{
-
-	
-	private static final long serialVersionUID = 1L;
+@Table(name = "authorities", uniqueConstraints= {@UniqueConstraint(columnNames= {"user_id", "authority"})})
+public class Role implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	 private Long id;
-	 
-	private Usuarios user_id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	private String authority;
 
 	public Long getId() {
@@ -32,21 +27,17 @@ public class Role implements Serializable{
 		this.id = id;
 	}
 
-	public String getauthority() {
+	public String getAuthority() {
 		return authority;
 	}
 
-	public void setauthority(String autority) {
-		this.authority = autority;
+	public void setAuthority(String authority) {
+		this.authority = authority;
 	}
 
-	public Usuarios getUser_id() {
-		return user_id;
-	}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-	public void setUser_id(Usuarios user_id) {
-		this.user_id = user_id;
-	}
-	
-	
 }
