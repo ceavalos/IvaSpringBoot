@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 
 import innotech.com.dao.DeclaracionDao;
 import innotech.com.entididades.Declaracion;
+import innotech.com.entididades.Empresa;
 
 @Service
 public class DeclaracionServiceImp implements DeclaracionService {
@@ -46,6 +47,11 @@ public class DeclaracionServiceImp implements DeclaracionService {
 	@Transactional
 	public void delete(Long id) {
 		declaracionDao.deleteById(id);		
+	}
+
+	@Override
+	public List<Declaracion> findEmpresa(Empresa empresa) {		
+		return declaracionDao.findByEmpresa(empresa);
 	}
 
 }

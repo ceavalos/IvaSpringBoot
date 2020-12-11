@@ -28,37 +28,43 @@
 				</ul>
 			</div>
 		</div>
+		
 		<h4 class="card-title py-2">
 			<a th:href="@{#}" class="btn btn-primary btn-xs">Crear
 				Declaracion</a>
+				
+				<a class="btn btn-danger btn-xs float-right mx-2" th:href="@{'/empresa/ver/' + ${datos.id}(format=pdf)}">PDF</a>
+				<a class="btn btn-success btn-xs float-right" th:href="@{'/empresa/ver/'+ ${datos.id} (format=xlsx)}">XLS</a>
+				<!--  <a th:href="@{'/empresa/ver/'+${datos.id} (format=xlsx) }" class="btn btn-secondary btn-xs float-right" >XLS</a>  -->
 		</h4>
 
 		<table class="table table-striped  border-top-0">
-			<tbody>
+			<thead>
 				<tr>
 					<td>ID</td>
 					<td>DESCRIPCION</td>
 					<td>FECHA INICIAL</td>
 					<td>FECHA FINAL</td>
-					<td>REGISTRA COMPRA</td>
-					<td>REGISTRA VENTA</td>
+					<td>TOTAL COMPRAS</td>
+					<td>TOTAL VENTAS</td>
 					<td>ELIMINAR</td>
 				</tr>
-			</tbody>
-			<thead>
+			</thead>
+			<tbody>
 				<tr th:each="declara: ${declaracion}">
-					<td th:text="${declara.id}"></td>
-					<td th:text="${declara.descripcion}"></td>
-					<td th:text="${declara.id}"></td>
-					<td th:text="${declara.id}"></td>
+				 <td th:text="${declara.id}"></td>
+					<td th:text="${declara.periodo.descripcion}"></td>
+					<td th:text="${declara.periodo.fechaInicio}"></td>
+					<td th:text="${declara.periodo.fechaFinal}"></td>
+					<!--<td><a class="btn btn-primary btn-xs" th:href="#"
+						th:text="'Total Compras'"></a></td>
 					<td><a class="btn btn-primary btn-xs" th:href="#"
-						th:text="'Registra Compras'"></a></td>
-					<td><a class="btn btn-primary btn-xs" th:href="#"
-						th:text="'Registra Ventas'"></a></td> td>
+						th:text="'Total Ventas'"></a></td> td>
 					<a class="btn btn-danger btn-xs" th:href="#" th:text="'eliminar'"></a>
+					 -->	
 					</td>
 				</tr>
-			</thead>
+			</tbody>
 		</table>
 
 	</div>

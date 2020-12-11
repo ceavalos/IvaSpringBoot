@@ -1,5 +1,6 @@
 package innotech.com.Controladores;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -22,9 +23,12 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import innotech.com.entididades.Cliente;
+import innotech.com.entididades.Declaracion;
 import innotech.com.entididades.Empresa;
 import innotech.com.paginator.PageRender;
+import innotech.com.services.DeclaracionServiceImp;
 import innotech.com.services.EmpresaServiceImp;
+import innotech.com.view.pdf.FacturaPdfView;
 
 @Controller
 @SessionAttributes("empresa")
@@ -33,6 +37,9 @@ public class EmpresaController {
 	
 	@Autowired
 	EmpresaServiceImp empresaServ;
+	
+	@Autowired
+	DeclaracionServiceImp declaracionServiceImp;
 	
 	@Value("${innotec.com.elementosPorPagina}")
 	String elementos ;
@@ -57,16 +64,32 @@ public class EmpresaController {
 	};
 	
 	@RequestMapping(value="/ver/{id}")
-	public String ver(@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash) {
+	public String ver(@PathVariable(value="id") Long id, 
+			@RequestParam(value = "format", required = false) String formato,
+			Map<String, Object> model, RedirectAttributes flash) {
 		Empresa empresa = empresaServ.findById(id);
+		System.out.println("Dentro de controlador empresa Ver/id format= " + formato);
+		
+		if (formato == "pdf" ) {
+			
+			/*
+			FacturaPdfView fac = new FacturaPdfView();
+			fac.buildPdfDocument();
+			*/
+		}
+		
 		if (empresa==null) {
 			flash.addAttribute("error", "La empresa no existe en la Base de datos");
 			return "redirect:/empresa/listar";
 		}
+		
+		List<Declaracion> declaraion = declaracionServiceImp.findEmpresa(empresa);
+		
 		//
 		model.put("empresa", empresa);
 		model.put("titulo", "Detalle Empresa: "+empresa.getNombre());
 		model.put("datos",empresa);
+		model.put("declaracion",declaraion);
 		//
 		return "/empresa/ver";
 	}

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import innotech.com.entididades.Declaracion;
+import innotech.com.entididades.Empresa;
 
 public interface DeclaracionService {
 
@@ -18,5 +19,7 @@ public interface DeclaracionService {
 	public Declaracion findOne(Long id);
 	
 	public void delete(Long id);
+	
+	public List<Declaracion> findEmpresa(Empresa empresa);
 	
 }

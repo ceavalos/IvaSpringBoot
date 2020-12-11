@@ -50,7 +50,7 @@
 							<td th:text="${empresa.createAt}"></td>
 							<td><a class="btn btn-primary btn-xs" th:href="@{/empresa/form/} + ${empresa.id}" th:text="'editar'" sec:authorize="hasRole('ROLE_ADMIN')"></a></td>
 					        <td><a class="btn btn-danger btn-xs" th:href="@{/empresa/eliminar/} + ${empresa.id}" th:text="'eliminar'"
-					         onclick="return confirm('Est�s seguro que quieres eliminar?');" sec:authorize="hasRole('ROLE_ADMIN')"></a></td>
+					         onclick="return confirm('Estas seguro que quieres eliminar?');" sec:authorize="hasRole('ROLE_ADMIN')"></a></td>
 						</tr>
 					</tbody>
 				</table>
