@@ -22,4 +22,8 @@ public interface DeclaracionService {
 	
 	public List<Declaracion> findEmpresa(Empresa empresa);
 	
+	public double totalCompras (Declaracion declaracion);
+	
+	public double totalVentas (Declaracion declaracion);
+	
 }

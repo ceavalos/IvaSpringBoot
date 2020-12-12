@@ -46,6 +46,7 @@ public class DeclaracionController {
 	@Autowired
 	PeriodoServiceImpl periodoServiceImp;
 	
+	
 	@Value("${innotec.com.elementosPorPagina}")
 	String elementos ;
 	
@@ -176,4 +177,5 @@ public class DeclaracionController {
 	}
 	
 
+	
 }

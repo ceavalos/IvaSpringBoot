@@ -1,5 +1,6 @@
 package innotech.com.Controladores;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,9 +24,11 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import innotech.com.entididades.Cliente;
+import innotech.com.entididades.Compra;
 import innotech.com.entididades.Declaracion;
 import innotech.com.entididades.Empresa;
 import innotech.com.paginator.PageRender;
+import innotech.com.services.CompraServiceImp;
 import innotech.com.services.DeclaracionServiceImp;
 import innotech.com.services.EmpresaServiceImp;
 import innotech.com.view.pdf.FacturaPdfView;
@@ -40,6 +43,9 @@ public class EmpresaController {
 	
 	@Autowired
 	DeclaracionServiceImp declaracionServiceImp;
+	
+	@Autowired
+	CompraServiceImp compraServiceImp;
 	
 	@Value("${innotec.com.elementosPorPagina}")
 	String elementos ;
@@ -83,13 +89,25 @@ public class EmpresaController {
 			return "redirect:/empresa/listar";
 		}
 		
-		List<Declaracion> declaraion = declaracionServiceImp.findEmpresa(empresa);
+		
+		List<Declaracion> declaracion = declaracionServiceImp.findEmpresa(empresa);
+		
+		/*List<Compra> compras = new ArrayList<Compra>(); 
+		
+		for (int i= 0; i<= declaracion.size(); i++) {
+			
+			compras = compraServiceImp.findByDeclaracion(declaracion.get(i).getId());
+			System.out.println( " compras = "+ compras.get(0).getId());
+		}
+		*/
+				
+		System.out.println("Salida declaraion empresa " + declaracion.get(0).getTotalVentas() );
 		
 		//
 		model.put("empresa", empresa);
 		model.put("titulo", "Detalle Empresa: "+empresa.getNombre());
 		model.put("datos",empresa);
-		model.put("declaracion",declaraion);
+		model.put("declaracion",declaracion);
 		//
 		return "/empresa/ver";
 	}
