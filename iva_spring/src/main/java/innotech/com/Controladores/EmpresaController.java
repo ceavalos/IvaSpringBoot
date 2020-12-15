@@ -92,6 +92,11 @@ public class EmpresaController {
 		
 		List<Declaracion> declaracion = declaracionServiceImp.findEmpresa(empresa);
 		
+		if (declaracion==null) {
+			flash.addAttribute("error", "La empresa aun no tiene Declaraciones presentadas");
+			return "redirect:/empresa/listar";
+		}
+		
 		/*List<Compra> compras = new ArrayList<Compra>(); 
 		
 		for (int i= 0; i<= declaracion.size(); i++) {
