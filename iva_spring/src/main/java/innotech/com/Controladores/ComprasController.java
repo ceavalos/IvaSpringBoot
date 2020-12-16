@@ -88,7 +88,7 @@ public class ComprasController {
 		modelo.addAttribute("compras",compras2);
 		
 		
-		return "/compras/listar";		
+		return "compras/listar";		
 		
 	};
 	
@@ -132,7 +132,7 @@ public class ComprasController {
 		modelo.addAttribute("datosNew",compra);
 		System.out.println("Salida desde el forms de compras");
 		
-		return "/compras/form";
+		return "compras/form";
 	};
 	
 	
@@ -143,7 +143,7 @@ public class ComprasController {
 		if (result.hasErrors()) {
 			model.addAttribute("titulo","Creación de Compras");				
 			System.out.println("Cantidad de Errores --> " + result.getFieldError());			
-			return "/compras/form";
+			return "compras/form";
 			
 		} else {
 		

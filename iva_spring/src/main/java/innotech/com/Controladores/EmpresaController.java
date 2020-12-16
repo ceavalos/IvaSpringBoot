@@ -66,7 +66,7 @@ public class EmpresaController {
 		//modelo.addAttribute("datos",empresaServ.findAll());		
 		modelo.addAttribute("datos",empresas);
 		modelo.addAttribute("page",pageRender);
-		return "/empresa/listar";
+		return "empresa/listar";
 	};
 	
 	@RequestMapping(value="/ver/{id}")
@@ -89,10 +89,13 @@ public class EmpresaController {
 			return "redirect:/empresa/listar";
 		}
 		
-		
+		System.out.println("Anstes de declaraion= " + formato);
 		List<Declaracion> declaracion = declaracionServiceImp.findEmpresa(empresa);
 		
-		if (declaracion==null) {
+		System.out.println("Luego  de declaraion declaracion.size()= " + declaracion.size()  );
+		
+		
+		if (declaracion.size()==0) {
 			flash.addAttribute("error", "La empresa aun no tiene Declaraciones presentadas");
 			return "redirect:/empresa/listar";
 		}
@@ -114,7 +117,7 @@ public class EmpresaController {
 		model.put("datos",empresa);
 		model.put("declaracion",declaracion);
 		//
-		return "/empresa/ver";
+		return "empresa/ver";
 	}
 	
 	
@@ -126,7 +129,7 @@ public class EmpresaController {
 		modelo.addAttribute("titulo","Creación de Empresa");	
 		modelo.addAttribute("empresa",empresa);
 		
-		return "/empresa/form";
+		return "empresa/form";
 	};
 	
 	@RequestMapping(value="/form", method=RequestMethod.POST)
@@ -135,7 +138,7 @@ public class EmpresaController {
 		
 		if (result.hasErrors()) {
 			model.addAttribute("titulo","Creación de Empresa");						
-			return "/empresa/form";
+			return "empresa/form";
 		} else {
 		
 			String mensajeFlash = (empresa.getId() != null)? "Empresa Editada con éxito" : " Empresa guardada con éxito "  ;
@@ -157,16 +160,16 @@ public class EmpresaController {
 			empresa = empresaServ.findById(id);
 			if (empresa == null) {
 				flash.addFlashAttribute("error", " La empresa no existe en la Base de datos");
-				return "redirect:/listar";
+				return "redirect:empresa/listar";
 			}
 		} else {
 			flash.addFlashAttribute("error", " Empresa no existe");
-			return "redirect:/listar";
+			return "redirect:/empresa/listar";
 		}
 		model.put("empresa", empresa);
 		model.put("titulo", "Editar Empresa");
 		flash.addFlashAttribute("success", " Empresa guardada con éxito");
-		return "/empresa/form";
+		return "empresa/form";
 	}
 	
 	

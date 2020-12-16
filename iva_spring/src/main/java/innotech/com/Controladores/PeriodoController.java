@@ -58,7 +58,7 @@ public class PeriodoController {
 		//modelo.addAttribute("datos",periodoServiceimp.findAll());		
 		modelo.addAttribute("datos",periodo);
 		modelo.addAttribute("page",pageRender);
-		return "/periodo/listar";
+		return "periodo/listar";
 		
 		
 	};
@@ -75,7 +75,7 @@ public class PeriodoController {
 		model.put("titulo", "Detalle Periodos Configurados " );
 		//model.put("datos",periodo);
 		//
-		return "/periodo/ver";
+		return "periodo/ver";
 	}
 	
 	@RequestMapping(value="/form") 
@@ -90,7 +90,7 @@ public class PeriodoController {
 		modelo.addAttribute("titulo","Creación de Periodo");	
 		modelo.addAttribute("periodo",periodo);
 		
-		return "/periodo/form";
+		return "periodo/form";
 	};
 	
 	
@@ -125,16 +125,16 @@ public class PeriodoController {
 			periodo = periodoServiceimp.findById(id);
 			if (periodo == null) {
 				flash.addFlashAttribute("error", " El periodo no existe en la Base de datos");
-				return "redirect:/listar";
+				return "redirect:/periodo/listar";
 			}
 		} else {
 			flash.addFlashAttribute("error", " Periodo no existe");
-			return "redirect:/listar";
+			return "redirect:/periodo/listar";
 		}
 		model.put("periodo", periodo);
 		model.put("titulo", "Editar Periodo");
 		flash.addFlashAttribute("success", " Periodo guardado con éxito");
-		return "/periodo/form";
+		return "periodo/form";
 	}
 	
 	

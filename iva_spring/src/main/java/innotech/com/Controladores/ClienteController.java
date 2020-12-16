@@ -88,7 +88,7 @@ public class ClienteController {
 		model.put("cliente", cliente);
 		model.put("titulo", "Detalle Cliente "+cliente.getNombre());
 		//
-		return "/cliente/ver";
+		return "cliente/ver";
 		
 	}
 	
@@ -105,7 +105,7 @@ public class ClienteController {
 		modelo.addAttribute("titulo", "Listado de terceros");
 		modelo.addAttribute("cliente", clientes);
 		modelo.addAttribute("page",pageRender);
-		return "/cliente/listar";
+		return "cliente/listar";
 	}
 	
 	@RequestMapping(value = "/form")
@@ -138,7 +138,7 @@ public class ClienteController {
 		model.put("cliente", cliente);
 		model.put("titulo", "Editar Cliente");
 		flash.addFlashAttribute("success", " Tercero guardado con éxito");
-		return "/cliente/form";
+		return "cliente/form";
 	}
 	
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
@@ -149,7 +149,7 @@ public class ClienteController {
 		if(result.hasErrors()) {
 			 System.out.println("con errores");
 			model.addAttribute("titulo", "Formulario de Cliente");
-			return "/cliente/form";
+			return "cliente/form";
 		}
 		
 		if ( !foto.isEmpty()) {
@@ -210,17 +210,21 @@ public class ClienteController {
 	
 	@RequestMapping(value="/eliminar/{id}")
 	public String eliminar(@PathVariable(value="id") Long id, RedirectAttributes flash) {
-		
+		 
 		if(id > 0) {
+			
+			//System.out.println("Dentro de contralador clientes!!! id= " + id );
+			
 			Cliente cliente = clienteService.findOne(id);			
 			
-			clienteService.delete(id);
-			flash.addFlashAttribute("success", " Tercero eliminado con éxito");			
-			
+			if (!(cliente.getFoto() ==null)) {
 				if (uploadFileService.delete(cliente.getFoto())) {
-					flash.addFlashAttribute("info", " Archivo eliminado con exito "+ cliente.getFoto());
-				};
+				  flash.addFlashAttribute("info", " Archivo eliminado con exito "+ cliente.getFoto());
+			    };
+			};
 			
+			clienteService.delete(id);
+			flash.addFlashAttribute("success", " Tercero eliminado con éxito");						
 		}
 		
 		return "redirect:/cliente/listar";

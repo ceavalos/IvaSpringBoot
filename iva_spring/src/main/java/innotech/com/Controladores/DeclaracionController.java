@@ -60,14 +60,14 @@ public class DeclaracionController {
 		Pageable  pageRequest =  PageRequest.of(page, elemento);
 		Page<Declaracion> declaracion = declaracionServiceImp.findAll(pageRequest);
 		
-		PageRender<Declaracion> pageRender = new PageRender<>("/declaracion/listar", declaracion, elemento) ;
+		PageRender<Declaracion> pageRender = new PageRender<>("declaracion/listar", declaracion, elemento) ;
 				
 		modelo.addAttribute("mensaje","hola desde thymeleaf");		
 		modelo.addAttribute("titulo","Mantenimiento de Declaraciones");
 		//modelo.addAttribute("datos",periodoServiceimp.findAll());		
 		modelo.addAttribute("datos",declaracion);
 		modelo.addAttribute("page",pageRender);
-		return "/declaracion/listar";		
+		return "declaracion/listar";		
 		
 	};
 	
@@ -82,7 +82,7 @@ public class DeclaracionController {
 		model.put("datos", declaracion);
 		model.put("titulo", "Detalle Declaraciones Configuradas " );
 		//
-		return "/declaracion/ver";
+		return "declaracion/ver";
 	}
 	
 	@RequestMapping(value="/form") 
@@ -104,7 +104,7 @@ public class DeclaracionController {
 		modelo.addAttribute("empresa",empresa);
 		modelo.addAttribute("periodo", periodo);
 		
-		return "/declaracion/form";
+		return "declaracion/form";
 	};
 	
 	
@@ -146,11 +146,11 @@ public class DeclaracionController {
 			declaracion = declaracionServiceImp.findOne(id);
 			if (declaracion == null) {
 				flash.addFlashAttribute("error", " El periodo no existe en la Base de datos");
-				return "redirect:/listar";
+				return "redirect:declaracion/listar";
 			}
 		} else {
 			flash.addFlashAttribute("error", " Periodo no existe");
-			return "redirect:/listar";
+			return "redirect:declaracion/listar";
 		}
 		
 		 Empresa empresa =  empresaServiceImp.findById(declaracion.getEmpresa().getId());		
@@ -162,7 +162,7 @@ public class DeclaracionController {
 		model.put("periodo", periodo);
 		//
 		flash.addFlashAttribute("success", " Periodo guardado con éxito");
-		return "/declaracion/form";
+		return "declaracion/form";
 	}
 	
 	
