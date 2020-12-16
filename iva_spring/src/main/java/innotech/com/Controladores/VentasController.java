@@ -76,7 +76,7 @@ public class VentasController {
 		modelo.addAttribute("page",pageRender);
 		modelo.addAttribute("ventas",venta2);
 		
-		return "/ventas/listar";		
+		return "ventas/listar";		
 		
 	};
 	
@@ -115,7 +115,7 @@ public class VentasController {
 		modelo.addAttribute("titulo","Creación de Ventas");	
 		modelo.addAttribute("datosNew",venta);
 		System.out.println("Salida desde el forms de compras");		
-		return "/ventas/form";
+		return "ventas/form";
 	};
 	
 	@RequestMapping(value="/form", method=RequestMethod.POST)

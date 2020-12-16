@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -30,7 +31,7 @@ public class Compra implements Serializable{
 	private Long id;
 	
 	@ManyToOne
-	@NotNull		
+	@NotNull	
 	Declaracion declaracion;
 	
 	@Temporal(TemporalType.DATE)

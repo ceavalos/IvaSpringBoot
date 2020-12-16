@@ -9,13 +9,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import innotech.com.dao.DeclaracionDao;
+import innotech.com.dao.IComprasDao;
+import innotech.com.entididades.Compra;
 import innotech.com.entididades.Declaracion;
+import innotech.com.entididades.Empresa;
 
 @Service
 public class DeclaracionServiceImp implements DeclaracionService {
 
 	@Autowired
 	DeclaracionDao declaracionDao;
+	
+	@Autowired
+	IComprasDao comprasDao;
 	
 	@Override
 	@Transactional(readOnly=true)
@@ -46,6 +52,28 @@ public class DeclaracionServiceImp implements DeclaracionService {
 	@Transactional
 	public void delete(Long id) {
 		declaracionDao.deleteById(id);		
+	}
+
+	@Override
+	public List<Declaracion> findEmpresa(Empresa empresa) {		
+		return declaracionDao.findByEmpresa(empresa);
+	}
+
+	@Override
+	public double totalCompras(Declaracion declaracion) {
+		List<Compra> compras = comprasDao.findByDeclaracion(declaracion.getId());
+		double total = 0; 
+		
+		for (int i =0; i<=compras.size(); i++) {
+			total += compras.get(i).getTotal_compras();
+		}		
+		return total;
+	}
+
+	@Override
+	public double totalVentas(Declaracion declaracion) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

@@ -1,5 +1,7 @@
 package innotech.com.Controladores;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -22,9 +24,14 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import innotech.com.entididades.Cliente;
+import innotech.com.entididades.Compra;
+import innotech.com.entididades.Declaracion;
 import innotech.com.entididades.Empresa;
 import innotech.com.paginator.PageRender;
+import innotech.com.services.CompraServiceImp;
+import innotech.com.services.DeclaracionServiceImp;
 import innotech.com.services.EmpresaServiceImp;
+import innotech.com.view.pdf.FacturaPdfView;
 
 @Controller
 @SessionAttributes("empresa")
@@ -33,6 +40,12 @@ public class EmpresaController {
 	
 	@Autowired
 	EmpresaServiceImp empresaServ;
+	
+	@Autowired
+	DeclaracionServiceImp declaracionServiceImp;
+	
+	@Autowired
+	CompraServiceImp compraServiceImp;
 	
 	@Value("${innotec.com.elementosPorPagina}")
 	String elementos ;
@@ -53,22 +66,58 @@ public class EmpresaController {
 		//modelo.addAttribute("datos",empresaServ.findAll());		
 		modelo.addAttribute("datos",empresas);
 		modelo.addAttribute("page",pageRender);
-		return "/empresa/listar";
+		return "empresa/listar";
 	};
 	
 	@RequestMapping(value="/ver/{id}")
-	public String ver(@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash) {
+	public String ver(@PathVariable(value="id") Long id, 
+			@RequestParam(value = "format", required = false) String formato,
+			Map<String, Object> model, RedirectAttributes flash) {
 		Empresa empresa = empresaServ.findById(id);
+		System.out.println("Dentro de controlador empresa Ver/id format= " + formato);
+		
+		if (formato == "pdf" ) {
+			
+			/*
+			FacturaPdfView fac = new FacturaPdfView();
+			fac.buildPdfDocument();
+			*/
+		}
+		
 		if (empresa==null) {
 			flash.addAttribute("error", "La empresa no existe en la Base de datos");
 			return "redirect:/empresa/listar";
 		}
+		
+		System.out.println("Anstes de declaraion= " + formato);
+		List<Declaracion> declaracion = declaracionServiceImp.findEmpresa(empresa);
+		
+		System.out.println("Luego  de declaraion declaracion.size()= " + declaracion.size()  );
+		
+		
+		if (declaracion.size()==0) {
+			flash.addAttribute("error", "La empresa aun no tiene Declaraciones presentadas");
+			return "redirect:/empresa/listar";
+		}
+		
+		/*List<Compra> compras = new ArrayList<Compra>(); 
+		
+		for (int i= 0; i<= declaracion.size(); i++) {
+			
+			compras = compraServiceImp.findByDeclaracion(declaracion.get(i).getId());
+			System.out.println( " compras = "+ compras.get(0).getId());
+		}
+		*/
+				
+		System.out.println("Salida declaraion empresa " + declaracion.get(0).getTotalVentas() );
+		
 		//
 		model.put("empresa", empresa);
 		model.put("titulo", "Detalle Empresa: "+empresa.getNombre());
 		model.put("datos",empresa);
+		model.put("declaracion",declaracion);
 		//
-		return "/empresa/ver";
+		return "empresa/ver";
 	}
 	
 	
@@ -80,7 +129,7 @@ public class EmpresaController {
 		modelo.addAttribute("titulo","Creación de Empresa");	
 		modelo.addAttribute("empresa",empresa);
 		
-		return "/empresa/form";
+		return "empresa/form";
 	};
 	
 	@RequestMapping(value="/form", method=RequestMethod.POST)
@@ -89,7 +138,7 @@ public class EmpresaController {
 		
 		if (result.hasErrors()) {
 			model.addAttribute("titulo","Creación de Empresa");						
-			return "/empresa/form";
+			return "empresa/form";
 		} else {
 		
 			String mensajeFlash = (empresa.getId() != null)? "Empresa Editada con éxito" : " Empresa guardada con éxito "  ;
@@ -111,16 +160,16 @@ public class EmpresaController {
 			empresa = empresaServ.findById(id);
 			if (empresa == null) {
 				flash.addFlashAttribute("error", " La empresa no existe en la Base de datos");
-				return "redirect:/listar";
+				return "redirect:empresa/listar";
 			}
 		} else {
 			flash.addFlashAttribute("error", " Empresa no existe");
-			return "redirect:/listar";
+			return "redirect:/empresa/listar";
 		}
 		model.put("empresa", empresa);
 		model.put("titulo", "Editar Empresa");
 		flash.addFlashAttribute("success", " Empresa guardada con éxito");
-		return "/empresa/form";
+		return "empresa/form";
 	}
 	
 	

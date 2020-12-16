@@ -57,11 +57,23 @@ public class Venta implements Serializable {
 	
 	private long total;
 	
+	public long getTotal() {
+		this.total = this.v_int_no_sujetas+this.v_int_excentas+this.v_int_gravadas+this.v_int_debito_fiscal+this.iva_retencion;
+		return total;
+	}
+
+	public void setTotal(long total) {
+		this.total = this.v_int_no_sujetas+this.v_int_excentas+this.v_int_gravadas+this.v_int_debito_fiscal+this.iva_retencion;
+		this.total = total;
+	}
+
 	private long iva_retencion;
+	
+	
 	
 	public long totalVentas() {
 		
-		return this.v_int_no_sujetas+this.v_int_excentas+this.v_int_gravadas+this.v_int_debito_fiscal;
+		return this.v_int_no_sujetas+this.v_int_excentas+this.v_int_gravadas+this.v_int_debito_fiscal+this.iva_retencion;
 	}
 
 	public Long getId() {
@@ -144,13 +156,7 @@ public class Venta implements Serializable {
 		this.v_int_debito_fiscal = v_int_debito_fiscal;
 	}
 
-	public long getTotal() {		
-		return this.total = this.v_int_no_sujetas + this.v_int_excentas + this.v_int_gravadas + this.v_int_debito_fiscal;
-	}
-
-	public void setTotal(long total) {
-		this.total = total;
-	}
+	
 
 	public long getIva_retencion() {
 		return iva_retencion;
