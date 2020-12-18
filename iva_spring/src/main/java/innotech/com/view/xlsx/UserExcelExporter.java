@@ -22,6 +22,7 @@ public class UserExcelExporter {
      
     public UserExcelExporter(List<User> listUsers) {
         this.listUsers = listUsers;
+        System.out.println("Antes de la nueva instancia");
         workbook = new XSSFWorkbook();
     }
  

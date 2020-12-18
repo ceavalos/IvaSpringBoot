@@ -30,14 +30,14 @@ public class UserController {
 
 		String headerKey = "Content-Disposition";
 		String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
-		/*response.setHeader(headerKey, headerValue);
+		response.setHeader(headerKey, headerValue);
 
 		List<User> listUsers = service.listAll();
 		if (listUsers != null) {
 			UserExcelExporter excelExporter = new UserExcelExporter(listUsers);
-			excelExporter.export(response);
+			//excelExporter.export(response);
 		}
-		*/
+		
 		;
 
 	}

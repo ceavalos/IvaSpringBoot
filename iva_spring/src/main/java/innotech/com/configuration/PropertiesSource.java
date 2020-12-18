@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration	
 @PropertySource("classpath:configuraciones.properties")
-public class PropertiesSource implements WebMvcConfigurer{
+public class PropertiesSource{
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
